@@ -5,8 +5,11 @@ import store from './store';
 import { 
     getInputChangeAction,
     getAddItemAction,
-    getTodoList,
-    getDeteleItemAction } from './store/actionCreators';
+    // getTodoList,
+    // initListAction,
+    // getInitAction,
+    getDeteleItemAction, 
+    getInitList} from './store/actionCreators';
 import TodoListUI from './TodoListUi'
 class TodoList extends Component {
 
@@ -20,8 +23,15 @@ class TodoList extends Component {
         store.subscribe(this.handleStoreChange)
     }
     componentDidMount() {
-      const action = getTodoList();
-      store.dispatch(action);
+      const action = getInitList();
+      store.dispatch(action)
+      console.log(action)
+      // axios.get('/list.json').then((res)=>{
+      //   const data =res.data
+      //   console.log(data)
+      //   const action = initListAction(data)
+      //   store.dispatch(action)
+      // })
     }
 
     handleInputChange(e){
