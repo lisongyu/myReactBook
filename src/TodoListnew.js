@@ -5,6 +5,7 @@ import store from './store';
 import { 
     getInputChangeAction,
     getAddItemAction,
+    getTodoList,
     getDeteleItemAction } from './store/actionCreators';
 import TodoListUI from './TodoListUi'
 class TodoList extends Component {
@@ -19,7 +20,8 @@ class TodoList extends Component {
         store.subscribe(this.handleStoreChange)
     }
     componentDidMount() {
-     
+      const action = getTodoList();
+      store.dispatch(action);
     }
 
     handleInputChange(e){
@@ -49,7 +51,7 @@ class TodoList extends Component {
       return (
         <TodoListUI 
           inputValue={this.state.inputValue}
-          handleInputChange={this.handleStoreChange}
+          handleInputChange={this.handleInputChange}
           handleBtnClick={this.handleBtnClick}
           handleItemDelete = {this.handleItemDelete}
 
