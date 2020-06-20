@@ -12,8 +12,9 @@ class App extends Component {
   render () {
     return (
       <Provider store={store}>
-        <Header />
+       
         <BrowserRouter>
+        <Header />
             <Route exact path='/' component={Home}></Route>
             <Route exact path='/detail' component={Detail}></Route>
         </BrowserRouter>
