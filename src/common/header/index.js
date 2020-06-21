@@ -1,7 +1,9 @@
 import React,{ Component }   from 'react';
 import {CSSTransition} from 'react-transition-group';
 import {connect} from 'react-redux';
-import  {actionCreators}  from './store';
+import { actionCreators } from './store';
+import { actionCreators as loginActionCreators} from '../../pages/login/store';
+import { Link } from 'react-router-dom';
 import { HeaderWrapper,
   Logo,Nav,
   NavItem,
@@ -54,14 +56,23 @@ import { HeaderWrapper,
     }
   }
   render() {
-    const {focused,handleInputFocus,handleInputBlur,list} =this.props
+    const {focused,handleInputFocus,handleInputBlur,list,login,loginOut} =this.props
     return (
       <HeaderWrapper>
       <Logo />
     <Nav>
       <NavItem className='left active'>首页</NavItem>
-      <NavItem className='left'>下载App</NavItem>
-      <NavItem className='right'>登录</NavItem>
+          <NavItem className='left'>
+           
+            下载App
+          </NavItem>
+         
+          {
+            login ?
+              <NavItem className='right' onClick={loginOut}>退出</NavItem> :
+              <Link to='/login'><NavItem className='right'>登录</NavItem></Link>
+          }
+            
       <NavItem className='right'>
       <i className="iconfont">&#xe636;</i>
       </NavItem>
@@ -85,10 +96,13 @@ import { HeaderWrapper,
         {this.getListArea()}
       </SearchWrapper>
     </Nav>
-  <Addition>
-    <Button className='writting'>
-      <i className="iconfont">&#xe615;</i>写文章
-    </Button>
+        <Addition>
+          <Link to='/write'>
+          <Button className='writting'>
+          <i className="iconfont">&#xe615;</i>写文章
+        </Button>
+          </Link>
+   
     <Button className='reg'>注册</Button>
   </Addition>
 </HeaderWrapper>
@@ -103,7 +117,8 @@ const mapStateToProps = (state) => {
     list:state.getIn(['header','list']),
     page:state.getIn(['header','page']),
     totalPage:state.getIn(['header','totalPage']),
-    mouseIn:state.getIn(['header','mouseIn']),
+    mouseIn: state.getIn(['header', 'mouseIn']),
+    login:state.getIn(['login','login'])
   }
 }
 const mapDispathToProps = (dispatch) =>{
@@ -111,6 +126,9 @@ const mapDispathToProps = (dispatch) =>{
     handleInputFocus(list) {
       (!list.size)&& dispatch(actionCreators.getList())
       dispatch(actionCreators.searchFocus())
+    },
+    loginOut() {
+      dispatch(loginActionCreators.logout())
     },
     handleInputBlur (){
       dispatch(actionCreators.searchBlur())

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import  {actionCreators}  from './store';
 class Detail extends PureComponent {
   render() {
+    console.log(this.props)
     return (
       <DetailWrapper>
         <Header>{this.props.title}</Header>
@@ -14,13 +15,14 @@ class Detail extends PureComponent {
     )
   }
   componentDidMount() {
-     this.props.getDetail()
+    console.log(this.props.match.params.id)
+     this.props.getDetail(this.props.match.params.id)
   }
 }
 
 const mapActions= (dispatch) => ({
-  getDetail(){
-    dispatch(actionCreators.getDetailInfo())
+  getDetail(id){
+    dispatch(actionCreators.getDetailInfo(id))
   }
 })
 const mapState = (state) => ({
